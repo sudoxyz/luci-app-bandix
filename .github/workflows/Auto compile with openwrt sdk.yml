@@ -84,8 +84,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: ipk
-            sdk_url: https://downloads.openwrt.org/releases/24.10.1/targets/bcm27xx/bcm2710/openwrt-sdk-24.10.1-bcm27xx-bcm2710_gcc-13.3.0_musl.Linux-x86_64.tar.zst
+          - version: aarch64
+            sdk_url: https://downloads.openwrt.org/releases/24.10.1/targets/rockchip/armv8/openwrt-sdk-24.10.1-rockchip-armv8_gcc-13.3.0_musl.Linux-x86_64.tar.zst
     steps:
       - name: Install packages
         run: |
