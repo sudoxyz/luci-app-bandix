@@ -166,33 +166,24 @@ jobs:
           echo "CONFIG_ALL_KMODS=n" >> .config
           echo "CONFIG_ALL=n" >> .config
           echo "CONFIG_AUTOREMOVE=n" >> .config
-          echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-          echo "CONFIG_LUCI_LANG_zh_Hant=y" >> .config
-          echo "CONFIG_LUCI_LANG_ja=y" >> .config
-          echo "CONFIG_LUCI_LANG_fr=y" >> .config
-          echo "CONFIG_LUCI_LANG_ru=y" >> .config
-          echo "CONFIG_LUCI_LANG_id=y" >> .config
-          echo "CONFIG_LUCI_LANG_pl=y" >> .config
-          echo "CONFIG_LUCI_LANG_th=y" >> .config
-          echo "CONFIG_LUCI_LANG_es=y" >> .config
           echo "CONFIG_PACKAGE_luci-app-bandix=m" >> .config
+          echo "CONFIG_PACKAGE_bandix=m" >> .config
           
 
 
           make defconfig
           make package/custom_packages/luci-app-bandix/luci-app-bandix/compile -j$(nproc) V=s
           mkdir upload
+          mv bin/packages/*/base/bandix* upload/
           mv bin/packages/*/base/luci-app-bandix* upload/
           mv bin/packages/*/base/luci-i18n-bandix* upload/
           cd upload
           
-          # 重命名不包含 all 的文件，在扩展名前添加 _all
           for file in *; do
             if [[ -f "$file" ]] && [[ ! "$file" =~ _all\. ]]; then
               filename="${file%.*}"
-              extension="${file##*.}"
-              mv "$file" "${filename}_all.${extension}"
-              echo "Renamed: $file -> ${filename}_all.${extension}"
+              mv "$file" "${filename}_all.ipk"
+              echo "Renamed: $file -> ${filename}_all.ipk"
             fi
           done
           
